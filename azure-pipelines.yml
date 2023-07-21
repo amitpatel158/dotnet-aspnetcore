@@ -28,18 +28,21 @@ steps:
     feedsToUse: 'select'
 
 - task: DotNetCoreCLI@2
-  inputs:
+  displayName: 'Build .NET MicroService'
+  inputs:    
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Publish .NET MicroService'
   inputs:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration) --output $(build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Build .NET MicroService Artifact'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
