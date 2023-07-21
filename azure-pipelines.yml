@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  ArtifactStagingDirectory:'c:\output'
+  ArtifactStagingDirectory: 'c:\output'
 
 steps:
 - task: UseDotNet@2
