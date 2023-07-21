@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-
+  ArtifactStagingDirectory:'c:\output'
 
 steps:
 - task: UseDotNet@2
@@ -26,3 +26,16 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(build.ArtifactStagingDirectory)'
+
