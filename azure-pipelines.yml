@@ -5,46 +5,46 @@
 trigger:
   - main
   
-  resources:
-  - repo: self
+resources:
+- repo: self
   
-  variables:
-    # Container registry service connection established during pipeline creation
-    dockerRegistryServiceConnection: 'b3020420-c1f5-447c-acb1-0da44fc27f2c'
-    imageRepository: 'sqlappdocker'
-    containerRegistry: 'localregistry1000.azurecr.io'
-    dockerfilePath: '$(Build.SourcesDirectory)/sqlapp/Dockerfile'
-    tag: '$(Build.BuildId)'
-  
-    # Agent VM image name
-    vmImageName: 'ubuntu-latest'
-  
-  stages:
-  - stage: Build
-    displayName: Build stage
-    jobs:
-    - job: Build
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'b3020420-c1f5-447c-acb1-0da44fc27f2c'
+  imageRepository: 'sqlappdocker'
+  containerRegistry: 'localregistry1000.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/sqlapp/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    container: mcr.microsoft.com/dotnet/sdk:6.0
+    steps:
+    
+    - task: DotNetCoreCLI@2
       displayName: Build
-      pool:
-        vmImage: $(vmImageName)
-      container: mcr.microsoft.com/dotnet/sdk:6.0
-      steps:
-      
-      - task: DotNetCoreCLI@2
-        displayName: Build
-        inputs:
-          command: build
-          projects: '**/*.csproj'
-          arguments: '--configuration $(buildConfiguration)'
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: publish
-          publishWebProjects: True
-          zipAfterPublish: false
-          arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-      
-      
-      - publish: '$(Build.ArtifactStagingDirectory)'
-        displayName: 'Publish build'
-        artifact: buildartifacts
+      inputs:
+        command: build
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: publish
+        publishWebProjects: True
+        zipAfterPublish: false
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    
+    
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      displayName: 'Publish build'
+      artifact: buildartifacts
   
