@@ -48,27 +48,3 @@ trigger:
         displayName: 'Publish build'
         artifact: buildartifacts
   
-  - stage: Deploy
-    displayName: Push stage
-    jobs:
-    - job: Deploy
-      displayName: Deploy
-      pool:
-        vmImage: $(vmImageName)
-      
-      steps:
-      - download: current
-        artifact: buildartifacts
-  
-      
-      - task: Docker@2
-        displayName: Build and push an image to container registry
-        inputs:
-          command: buildAndPush
-          buildContext: '$(Pipeline.Workspace)/buildartifacts/sqlapp'
-          repository: $(imageRepository)
-          dockerfile: $(dockerfilePath)
-          containerRegistry: $(dockerRegistryServiceConnection)
-          tags: |
-            $(tag)
-            latest
