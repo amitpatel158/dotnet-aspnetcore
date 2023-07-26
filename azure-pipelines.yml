@@ -50,3 +50,5 @@ steps:
       echo Write your commands here
       
       hostname
+
+      dotnet --list-sdks
