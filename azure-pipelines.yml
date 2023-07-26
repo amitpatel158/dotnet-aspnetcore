@@ -44,3 +44,9 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      hostname
