@@ -2,7 +2,7 @@ pool:
   name: 'Default'
 container: mcr.microsoft.com/dotnet/sdk:6.0
 steps:
-- script: date /t
+- script: dir
   displayName: Gets the current date
 - script: dir  
   workingDirectory: $(Agent.BuildiDirectory)
