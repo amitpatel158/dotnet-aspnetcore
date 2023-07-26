@@ -52,3 +52,4 @@ steps:
       hostname
 
       dotnet --list-sdks
+      ls -la "/__w/1/s/""
