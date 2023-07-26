@@ -43,3 +43,7 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task:
+  displayName: 'Build .NET MicroService Artifact'
+  - script: hostname
