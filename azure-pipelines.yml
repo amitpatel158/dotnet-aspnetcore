@@ -1,5 +1,5 @@
 pool:
-  vmImage: 'windows-2019'
+  name: 'Default'
 container: mcr.microsoft.com/windows/servercore:ltsc2019
 steps:
 - script: date /t
